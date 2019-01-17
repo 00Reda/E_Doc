@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+     <style type="text/css">
+	.login-form {
+	    
+		width: 640px;
+    	margin: 20px auto;
+	}
+    .login-form form {
+    	margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+    .login-form h2 {
+        margin: 0 0 15px;
+    }
+    .form-control, .btn {
+        min-height: 38px;
+        border-radius: 2px;
+    }
+    .btn {        
+        font-size: 15px;
+        font-weight: bold;
+    }
+</style>
+ 
+
+<body>
+      <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+
+	       <main role="main">
+	       
+		     <hr/>
+	          <h3>Modification de la filiere</h3>
+	         <hr/>
+	    
+        <div class="row">
+         <div class="col-7 offset-3">
+          <div class="card">
+          <div class="card-body">
+           <div class="login-form">
+			    <form th:action="@{/dashboard/admin/filiere/action}" method="post" th:object="${filiere}">
+			       <input type="hidden" th:field="*{id}" >
+			          
+			        <div class="form-group">
+			        	<label for="inputEmail3" class="col-sm-2 col-form-label">Nom</label>
+			            <input type="text" th:field="*{nom}"  class="form-control" placeholder="nom" name="nom" required="required">
+			        </div>
+			        <div class="form-group">
+			        
+			        	<label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
+			            <textarea  rows="3" cols="7" th:field="*{description}"  class="form-control" placeholder="description" name="description" required="required"></textarea>
+			        </div>
+			        <div class="form-group">
+			            <button type="submit" class="btn btn-primary btn-block">Modifier</button> 
+			        </div>
+		    </form>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+</main>
+	         
+ </div>
+</body>
+</html>

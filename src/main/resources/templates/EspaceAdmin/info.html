@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+<body>
+      <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+	       <main role="main">
+		     <hr/>
+	          <h3>Informations Personnelle </h3>
+	         <hr/>
+	          <div class="row">
+	          <div class="col-4 " >
+	          <div class="card">
+	          <div class="card-body">
+	            <div class="alert alert-danger" role="alert" th:if="${errors}"> 
+                  <p>l'un des mot de pass correspond pas!!!</p>
+                </div>
+	          <input type="button" class="btn btn-dark pass" value="modifier Mot de pass">
+	            <form th:action="@{/dashboard/etudiant/pass/action}" class="forme" method="post">
+    	        <div class="editpass">
+    	        </div>
+    	       </form>
+	          </div>
+	          </div>
+	          </div>
+	          <div class="col-6" >
+	           <div class="card" >
+                 <div class="card-body" th:object="${etudiant}">
+                 <label class="col-form-label"><strong>CNE</strong></label>
+                 <p class="form-control" th:text="*{cne}">
+                 </p>
+                 <label class="col-form-label"><strong>Nom</strong></label>
+                 <p class="form-control" th:text="*{nom}">
+                 </p>
+                 <label class="col-form-label"><strong>Prenom</strong></label>
+                 <p class="form-control" th:text="*{prenom}">
+                 </p>
+                 <label class="col-form-label"><strong>Filiere</strong></label>
+                 <p class="form-control" th:text="*{filiere.nom}">
+                 </p>
+                 <label class="col-form-label"><strong>Email</strong></label>
+                 <p class="form-control" th:text="*{email}">
+                 </p>
+                 <label class="col-form-label"><strong>Date de creation de votre compte</strong></label>
+                 <p class="form-control" th:text="*{date_creation}">
+                 </p>
+	            </div>
+	          </div>
+	          </div>
+	          </div>
+	        </main>
+ </div>
+</body>
+</html>

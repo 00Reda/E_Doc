@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+     
+<body>
+      <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+
+	       <main role="main">
+	       
+		     <hr/>
+	          <h3>Modification de vos informations </h3>
+	         <hr/>
+	    
+        <div class="row">
+         <div class="col-7 offset-3">
+          <div class="card">
+          <div class="card-body">
+           <div class="login-form">
+			    <form th:action="@{/dashboard/etudiant/action}" method="post" th:object="${etudiant}">
+			          
+			        <div class="form-group">
+			        	<label for="inputEmail3" class="col-sm-2 col-form-label">email</label>
+			            <input type="email" th:field="*{email}"  class="form-control" placeholder="email" name="email" required="required">
+			        </div>
+			        <div class="form-group">
+			        	<label for="inputEmail3" class="col-sm-2 col-form-label">nom</label>
+			            <input type="text" th:field="*{nom}"  class="form-control" placeholder="nom" name="nom" required="required">
+			        </div>
+			        <div class="form-group">
+			        	<label for="inputEmail3" class="col-sm-2 col-form-label">prenom</label>
+			            <input type="text" th:field="*{prenom}" class="form-control" placeholder="prenom" name="prenom" required="required">
+			        </div>
+			        
+			        <div class="form-group">
+			        	<label for="inputEmail3" class="col-sm-2 col-form-label">cne</label>
+			            <input type="text" th:field="*{cne}" class="form-control" placeholder="cne" name="cne" required="required">
+			        </div>
+				    <div class="form-group">
+			        	<label for="inputEmail3" class="col-sm-2 col-form-label">filiere :</label>
+			        	<select th:field="*{filiere.id}" class="form-control"  name="filiere" required="required">
+					            <option th:each="f:${filieres}" th:value="${f.id}" th:text="${f.nom}"></option>
+					    </select>
+				    </div>
+			        <div class="form-group">
+			            <button type="submit" class="btn btn-primary btn-block">Modifier</button> 
+			        </div>
+		    </form>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+</main>
+	         
+ </div>
+</body>
+</html>

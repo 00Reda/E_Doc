@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-9 ml-sm-auto col-lg-10 px-4 ">
+
+	<main role="main" >
+	      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	        <h1 class="h2">Les Filieres</h1>
+	        <div class="">
+	      	      <a class="btn btn-primary " th:href="@{/dashboard/admin/filiere/add}"><span data-feather="plus-circle"></span></a>
+	        </div>
+	      </div>
+	      <div class="row">
+	     
+	      <div class="col-12">
+	      <div>
+	      
+	      <div class="card-body">
+	       <table class="table table-striped">
+          <tr>
+            <th>#</th> <th>Nom</th> <th>Description</th> <th>Action</th>
+          </tr>
+          <tr th:each="filiere : ${filieres}">
+              <td th:text="${filiere.id }"></td>
+              <td th:text="${filiere.nom }"></td>
+              <td th:text="${filiere.description}"></td>
+              <td>
+               <a style="margin:5px" class="btn btn-info" th:href="@{/dashboard/admin/filiere/etudiants(id=${filiere.id},page=0)}"><span data-feather="list"></span></a>
+               <a style="margin:5px" class="btn btn-dark" th:href="@{/dashboard/admin/filiere(id=${filiere.id})}"><span data-feather="edit"></span></a>
+               <a style="margin:5px" class="btn btn-danger" onclick=" return confirm('Vous etes sure de supprimer cette fili�re  et tous ses Etudiants??')" th:href="@{/dashboard/admin/delete/filiere(id=${filiere.id})}"><span data-feather="trash-2"></span></a>
+              </td>
+          </tr>
+          </table>
+	      <div class="row">
+		     <nav aria-label="...">
+		      <ul class="pagination pagination-lg" >
+				<li class="page-item" th:each="i : ${#numbers.sequence( 1,total ,1)}">
+						<a class="page-link" th:href="@{/dashboard/admin/filieres(page=${i}-1)}" th:text="${i}"></a>
+				</li>
+						    
+			  </ul>
+			</nav>
+		</div>
+	   </div>
+	   </div>
+      </div>
+     </div>
+    </main>
+    </div>
+    </body>
+    </html>

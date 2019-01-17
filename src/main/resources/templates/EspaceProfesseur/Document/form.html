@@ -1,0 +1,70 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+
+	       <main role="main" >
+	       
+		     <hr/>
+	         <h3>Document : </h3>
+	        <hr/>
+	        
+	           <form th:action="@{/docs/prof/action/}+${action}" method="post" th:object="${doc}">
+		        <div class="alert alert-danger" role="alert" th:if="${error}"> 
+		          <p th:text="${error}"> </p>
+		        </div>  
+		        <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">titre</label>
+		            <input type="text" th:field="*{titre}" class="form-control" placeholder="titre" name="titre" required="required">
+		        </div>
+		        <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">theme</label>
+		            <input type="text" th:field="*{theme}" class="form-control" placeholder="theme" name="theme" required="required">
+		        </div>
+		        <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">descipline</label>
+		            <input type="text" th:field="*{discipline}" class="form-control" placeholder="descipline" name="descipline" required="required">
+		        </div>
+		        <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">langue</label>
+		            <input type="text" th:field="*{langue}" class="form-control" placeholder="langue" name="langue" required="required">
+		        </div>
+		        <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">nombre de page</label>
+		            <input type="number" min="1" th:field="*{nombrePage}" class="form-control" placeholder="langue" name="nombrePage" required="required">
+		        </div>
+		        <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">lien</label>
+		            <input type="text" th:field="*{lien}" class="form-control" placeholder="lien" name="lien" required="required">
+		        </div>
+		        
+		        <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">lien auxilliaire</label>
+		            <input type="text" th:field="*{lien_auxilliaire}" class="form-control" placeholder="lien auxilliaire" name="lien_auxilliaire" required="required">
+		        </div>
+		        
+		         
+		        
+		        
+		        <hr/>
+		        <div class="form-group">
+		            <button type="submit" class="btn btn-primary" th:text="${btn}"></button> 
+		        </div>
+		               
+		    </form>
+	         
+	       </main>
+          </div>
+ </body>
+ </html>

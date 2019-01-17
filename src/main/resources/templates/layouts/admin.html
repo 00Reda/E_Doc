@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr">
+  <head th:replace="fragements/headerAdmin :: head"></head>
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"> E-doc / \ Espace privé </a>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" th:href="@{/logout}">Sign out</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+   
+    <div sec:authorize="hasRole('ROLE_ADMIN')" th:replace="fragements/menuAdmin :: menu"></div> 
+    <div sec:authorize="hasRole('ROLE_ETUDIANT')" th:replace="fragements/menuEtudiant :: menu"></div> 
+    <div sec:authorize="hasRole('ROLE_PROF')" th:replace="fragements/menuProfesseur :: menu"></div> 
+
+
+    <div layout:fragment="content"></div>
+  </div>
+</div>
+
+    <div th:replace="fragements/footerAdmin :: footer"></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script th:src="@{/js/bootstrap/jquery.js}" ></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script  th:src="@{/js/popper.min.js}"></script>
+    <script  th:src="@{/js/Chart.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <script th:src="@{/js/holder.min.js}"></script>
+    <script th:src="@{/js/dashboard.js}"></script>   
+    <script type="text/javascript">
+              $(".delete").on("click",function(e){
+            	  
+            	  var r=window.confirm(" confirmation de la suppression ??!!");
+            	  if(r==false){
+            		  e.preventDefault();
+            	  }else{return}
+              })
+              
+              $(document).ready(function(){
+        	
+           $(".pass").on("click",function(e){
+        	   
+        	e.preventDefault();
+        	var l1=$('<div class="form-group"></div>');
+        	var g1=$('<div class="form-group"></div>');
+        	var label1=$('<label>Ancien Mot de pass</label>');
+        	var inp1=$('<input type="password" class="form-control" name="oldpass" required="required">' );
+        	var g2=$('<div class="form-group"></div>');
+        	var label2=$('<label>nouveau Mot de pass</label>');
+        	var inp2=$('<input type="password" class="form-control" name="newpass" required="required">' );
+        	var g3=$('<div class="form-group"></div>');
+        	var label3=$('<label>confirmer Mot de pass</label>');
+        	var inp3=$('<input type="password" class="form-control" name="confirmpass" required="required">' );
+            var btn=$('<button type="submit" class="btn btn-primary btn-block">save</button>') 	                   
+                       
+        	g1.append(label1);
+        	g1.append(inp1);
+        	g1.appendTo(".editpass");
+        	g2.append(label2);
+        	g2.append(inp2);
+        	g2.appendTo(".editpass");
+        	g3.append(label3);
+        	g3.append(inp3);
+        	g3.appendTo(".editpass");
+        	l1.append(btn);
+        	l1.appendTo(".editpass");
+        	$(this).remove();
+        	
+        	
+        });
+     });
+  
+    </script>
+    
+    <script type="text/javascript"  th:src="@{/js/calendar.js}"></script>
+
+    <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    
+ </body>
+</html>

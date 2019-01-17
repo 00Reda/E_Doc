@@ -1,0 +1,57 @@
+
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+
+ 
+
+<body>
+      <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+
+	       <main role="main">
+	       
+		     <hr/>
+	          <h3>listes des Documents du professeur <strong th:text="${prof.nom}"></strong> </h3>
+	         <hr/>
+	         <div class="row">
+		         <div class="alert alert-danger" role="alert" th:if="${empty}"> 
+	                  <p>pas de documents pour Mr  <strong th:text="${prof.nom}"></strong> </p>
+	                </div>
+	         <div class="col-md-4"  th:each="documents : ${documents}">
+		              <div class="card mb-4 box-shadow">
+		               <!--   <img class="card-img-top" th:src="${'https://loremflickr.com/320/240/book?random='+e.id_document}" alt="Card image cap">-->
+		                <div class="card-body">
+		                  <p class="card-text" style="font-size: 26px"><b th:text="${documents.titre+' ('+documents.nombrePage+' pages)'}"></b><SUP th:text=" ${ ' ' +documents.langue}"></SUP></p>
+		                  <p> date Ajout : <big th:text="${documents.dateAjout }"></big> </p>
+		                  
+			               <div class="d-flex justify-content-between align-items-center">
+		                     <div class="btn-group">
+		                      <a class="btn btn-sm btn-outline-secondary" th:href="${documents.lien}" ><span data-feather="download"></span></a>
+		                      <a class="btn btn-sm btn-outline-secondary" th:href="${documents.lien_auxilliaire}"><span data-feather="download-cloud"></span></a>
+		                    </div>
+		                    <small class="text-muted"><p class="card-text"><b th:text="${documents.discipline +' / '+documents.theme}"></b></p></small>
+		                  	<a class="btn btn-sm btn-danger" onclick=" return confirm('Vous etes sur le point de supprimer un document de votre Site??')" th:href="@{/dashboard/admin/prof/document/delete(id=${documents.id_document},email=${prof.email})}"><span data-feather="trash-2"></span></a>
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+		         </div>
+		       <div class="row">
+		       <nav aria-label="...">
+		         <ul class="pagination pagination-lg" >
+				   <li class="page-item" th:each="i : ${#numbers.sequence( 1,total ,1)}">
+						<a class="page-link" th:href="@{/dashboard/admin/prof/documents(id=${prof.email},page=${i}-1)}" th:text="${i}"></a>
+				</li>
+						    
+			  </ul>
+			</nav>
+		</div>
+		            
+    </main>
+ </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!-- https://stackoverflow.com/questions/36663038/spring-thymeleaf-header-and-footer-dynamic-includes -->
+<!DOCTYPE html>
+<html>
+<head th:replace="fragements/header :: head"></head>
+<body>
+   <header>
+	   <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4 py-4">
+              <h4 class="text-white">About</h4>
+              <p class="text-muted">On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution.</p>
+              <p class="text-muted">Création d'un compte :</p>
+              <a th:href="@{/account/student}" class="btn btn-primary">Etudiant</a>
+              <a th:href="@{/account/prof}" class="btn btn-primary">Professeur</a>
+            </div>
+            <div class="col-sm-4 py-4">
+              <h4 class="text-white">Contact</h4>
+              <ul class="list-unstyled">
+                <li><a href="#" class="text-white">Twitter</a></li>
+                <li><a href="#" class="text-white">Facebook</a></li>
+                <li><a href="#" class="text-white">Email</a></li>
+              </ul>
+            </div>
+            <div class="col-sm-4 py-4">
+              <h4 class="text-white">liens utiles : </h4>
+              <ul class="list-unstyled">
+                <li><a th:href="@{/login}" class="text-white">login</a></li>
+                <li><a th:href="@{/com/forum}" class="text-white">Forum</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+          <a href="/" class="navbar-brand d-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <strong>Docs</strong>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          
+        </div>
+      </div>
+  </header>
+   
+     <div layout:fragment="content"></div>
+     
+     
+     <div th:replace="fragements/footer :: footer"></div>
+   
+
+ <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <script th:src="@{/js/bootstrap/jquery.js}" ></script>
+    
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script  th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <script th:src="@{/js/holder.min.js}"></script>
+    
+  </body>
+</html>

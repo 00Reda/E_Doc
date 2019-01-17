@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-9 ml-sm-auto col-lg-10 px-4 offset-md-2">
+
+	<main role="main" >
+	      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	        <h1 class="h2" >Ensembles des Etidants de la Filiere   <strong th:text="${filiere.nom}"></strong></h1>
+	       
+	      </div>
+	      <div class="alert alert-danger" role="alert" th:if="${empty}"> 
+                  <p>pas d'etudiant pour cette filiere!!!</p>
+                </div>
+	       <table class="table table-striped" th:if="!${empty}">
+          <tr>
+          <th>CNE</th> <th>Nom</th> <th>Prenom</th> <th>email</th> <th>Statut</th>
+          </tr>
+          <tr th:each="etudiant : ${etudiants}">
+              <td th:text="${etudiant.cne}"></td>
+              <td th:text="${etudiant.nom }"></td>
+              <td th:text="${etudiant.prenom}"></td>
+              <td th:text="${etudiant.email}"></td>
+              <td th:text="${etudiant.active}"></td>
+          </tr>
+          </table>
+          
+	      <div class="row">
+		     <nav aria-label="...">
+		      <ul class="pagination pagination-lg" >
+				<li class="page-item" th:each="i : ${#numbers.sequence( 1,total ,1)}">
+					<a class="page-link" th:href="@{/dashboard/admin/filiere/etudiants(id=${filiere.id} ,page=${i}-1)}" th:text="${i}"></a>
+				</li>
+						    
+			  </ul>
+			</nav>
+		</div>
+	
+
+     
+    </main>
+    </div>
+    </body>
+    </html>

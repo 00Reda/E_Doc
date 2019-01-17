@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+    <body>
+      <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+
+	       <main role="main">
+	       
+		     <hr/>
+	          <h3>Ajout de filiere</h3>
+	         <hr/>
+	    
+        <div class="row">
+         <div class="col-7 offset-3">
+          <div class="card">
+          <div class="card-body">
+           <div class="login-form">
+			    <form th:action="@{/dashboard/admin/filiere/add/action}" method="post" th:object="${filiere}">
+			        <div class="form-group">
+			        	<label for="inputEmail3" class="col-sm-2 col-form-label">Nom</label>
+			            <input type="text" th:field="*{nom}"  class="form-control" placeholder="nom" name="nom" required="required">
+			        </div>
+			        <div class="form-group">
+			        
+			        	<label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
+			            <textarea  rows="3" cols="7" th:field="*{description}"  class="form-control" placeholder="description" name="description" required="required"></textarea>
+			        </div>
+			        <div class="form-group">
+			            <button type="submit" class="btn btn-primary btn-block">Ajouter</button> 
+			        </div>
+		    </form>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+</main>
+	         
+ </div>
+</body>
+</html>

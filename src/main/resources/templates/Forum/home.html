@@ -1,0 +1,112 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/forum">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-12">
+
+	       <main role="main" >
+	       
+		    
+	        <div class="container col-md-10">
+	        <hr/>
+	          <div class="row" >
+	        	  
+			      <h3 class="center col-md-11 ">liste des questions  
+			      
+			      </h3>
+			      <button class="btn btn-secondary col-md-1" id="addQuestion"><i class="fas fa-plus-square"></i></button>
+	        	  
+	              
+	          </div>  
+	          <hr/>  
+	          <div class="row" style="margin-bottom:20px">
+	      			 
+		          <div class="list-group col-md-12">
+					  <div th:each="e:${questions}" class=" list-group-item list-group-item-action" style="margin:5px">
+					    <div class="d-flex w-100 justify-content-between">
+					      <h3 class="mb-1" th:text="${e.sujet}" th:id="sujet+${e.id_question}"></h3>
+					       <div class="btn-group btn-group-sm" style="margin-bottom: 10px" role="group" aria-label="Basic example" >
+							 <div th:if="${user.id_user}==${e.owner.id_user} or ${user.roles[0].role}=='ADMIN' ">
+							  <a href="#" th:data-id="${e.id_question}" class="btn btn-secondary editQuestion">modifer</a>
+							  <a th:href="@{/com/forum/question/delete?id=}+${e.id_question}" class="btn btn-danger">supp</a>
+							 </div>
+						   </div>
+						    
+					    </div>
+					    <p class="mb-1" th:text="${e.description}" th:id="desc+${e.id_question}"></small>
+					    <p>
+		             		<big class="badge badge-pill badge-dark" th:text="${e.owner.nom}+' '+${e.owner.prenom}"></big>  
+		             		<big class="badge badge-pill badge-dark" th:text="${e.owner.roles[0].role}"></big><br/>
+		             		<span class="badge badge-pill badge-dark" th:text="${e.dateAjout}"></span>
+		                </p>
+		                 <a th:href="@{/com/forum/show?id=}+${e.id_question}" class="btn btn-info">voir</a>
+		                 
+					  
+					  </div>
+				      
+				  </div>
+		      </div>
+	        </div>
+	        
+	        
+	       </main>
+	       
+	        <!-- add Form begin  -->
+          
+
+			<div class="modal fade bd-example-modal-lg" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+			    
+			     <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Ajout d'une question</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      
+			      <div class="modal-body">
+			          <form id="form" th:action="@{/com/forum/question/}" th:data-action="@{/com/forum/question/}" method="post" th:object="${question}" style="margin:15px">
+				        <div class="alert alert-danger" role="alert" th:if="${error}"> 
+				          <p th:text="${error}"> </p>
+				        </div>  
+				        <div class="form-group">
+				        	<label for="inputEmail3" class="col-sm-2 col-form-label">Sujet</label>
+				            <input type="test" id="sujet" th:field="*{sujet}" class="form-control" placeholder="sujet" name="sujet" required="required">
+				        </div>
+				        <div class="form-group">
+				        	<label for="inputEmail3" class="col-sm-2 col-form-label">descriptiuon</label>
+				            <textarea class="form-control" th:field="*{description}" id="desc" rows="4" placeholder="description" name="description" required="required"></textarea>
+				        </div>
+				        
+				        <hr/>
+				        <div class="form-group">
+				            <button type="submit" class="btn btn-primary btn-block">Soumettre</button> 
+				        </div>
+				   	    </form>
+			      </div>
+			      
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        
+			      </div>
+			    </div>
+			  </div>
+			</div>
+          <!-- add Form end  -->
+	       
+          </div>
+          
+         
+ </body>
+ </html>

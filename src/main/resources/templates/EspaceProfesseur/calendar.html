@@ -1,0 +1,60 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+
+	       <main role="main" >
+	       
+		     <hr/>
+	         <h3>votre calendrier : 
+	         </h3>
+	         
+	         
+	        <button class="btn btn-info" id="authorize_button" style="display: none;">Authorize</button>
+		    <button class="btn btn-info" id="signout_button" style="display: none;">Sign Out</button>
+		    <hr/>
+		    
+		    <form class="form-inline" id="filterForm">
+		      <label style="margin-right: 15px; font-size: 26px"><i class="fas fa-filter"></i></label>
+			  <div class="form-group mb-2">
+			    <label for="staticEmail2" class="sr-only">nom :</label>
+				<select name="calendar" id="calendarList" class="form-control">
+		        </select>
+			  </div>
+			  <i class="fas fa-spinner fa-spin" style="margin-left: 15px; font-size: 26px ; display: none"></i>
+			</form>
+	        <hr/>
+	         
+
+		    <!--Add buttons to initiate auth sequence and sign out-->
+		    
+		
+		   <!-- <pre id="content" style="white-space: pre-wrap;"></pre> --> 
+            <table class="table">
+                <thead>
+                	<tr>
+                	    <th>le nom de l'evenement</th>
+                	    <th>date</th>
+                	    <th>type</th>
+                	</tr>
+                </thead>
+                <tbody id="content">
+                </tbody>
+               
+            </table>
+	         
+	       </main>
+          </div>
+ </body>
+ </html>

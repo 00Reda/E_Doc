@@ -1,0 +1,46 @@
+
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+
+ 
+
+<body>
+      <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+
+	       <main role="main">
+	       
+		     <hr/>
+	          <h3>listes de vos documents enregistrés </h3>
+	         <hr/>
+	         <div class="row">
+	         <div class="col-md-4"  th:each="book : ${bookmark}">
+		              <div class="card mb-4 box-shadow">
+		               <!--   <img class="card-img-top" th:src="${'https://loremflickr.com/320/240/book?random='+e.id_document}" alt="Card image cap">-->
+		                <div class="card-body">
+		                  <p class="card-text" style="font-size: 26px"><b th:text="${book.titre+' ('+book.nombrePage+' pages)'}"></b><SUP th:text=" ${ ' ' +book.langue}"></SUP></p>
+		                  <p> Ajouté par : <big th:text="${book.proprietaire.nom+' '+book.proprietaire.prenom }"></big> </p>
+		                  <p> le : <big th:text="${book.dateAjout }"></big> </p>
+		                  
+			               <div class="d-flex justify-content-between align-items-center">
+		                     <div class="btn-group">
+		                      <a class="btn btn-sm btn-outline-secondary" th:href="${book.lien}" ><span data-feather="download"></span></a>
+		                      <a class="btn btn-sm btn-outline-secondary" th:href="${book.lien_auxilliaire}"><span data-feather="download-cloud"></span></a>
+		                      
+		                    </div>
+		                    <small class="text-muted"><p class="card-text"><b th:text="${book.discipline +' / '+book.theme}"></b></p></small>
+		                 	<a class="btn btn-sm btn-outline-danger" th:href="@{/bookmark/delete/}+${book.id_document}"><span data-feather="trash-2"></span></a>
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+		            </div>
+		            
+    </main>
+ </div>
+</body>
+</html>

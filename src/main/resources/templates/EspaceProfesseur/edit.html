@@ -1,0 +1,61 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+
+	       <main role="main" >
+	       
+		     <hr/>
+	         <h3>Modifier le profile : </h3>
+	        <hr/>
+	        
+	           <form th:action="@{/users/prof/edit/action}" method="post" th:object="${p}">
+		        <div class="alert alert-danger" role="alert" th:if="${error}"> 
+		          <p th:text="${error}"> </p>
+		        </div>  
+		        <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">email</label>
+		            <input type="email" th:field="*{email}" class="form-control" placeholder="email" name="email" required="required">
+		        </div>
+		        <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">nom</label>
+		            <input type="text" th:field="*{nom}" class="form-control" placeholder="nom" name="nom" required="required">
+		        </div>
+		        <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">prenom</label>
+		            <input type="text" th:field="*{prenom}" class="form-control" placeholder="prenom" name="prenom" required="required">
+		        </div>
+		        <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">mot de passe </label>
+		            <input type="password" th:field="*{password}" class="form-control" placeholder="password" name="password">
+		        </div>
+		       <div class="form-group">
+		        	<label for="inputEmail3" class="col-sm-2 col-form-label">Specialite </label>
+		            <input type="text" th:field="*{specialite}" class="form-control" placeholder="specialite" name="specialite" required="required">
+		        </div>
+		         
+		        
+		        
+		        <hr/>
+		        <div class="form-group">
+		            <button type="submit" class="btn btn-primary">Modifier</button> 
+		          
+		        </div>
+		               
+		    </form>
+	         
+	       </main>
+          </div>
+ </body>
+ </html>

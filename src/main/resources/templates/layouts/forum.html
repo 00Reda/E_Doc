@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+  <head th:replace="fragements/headerAdmin :: head"></head>
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"> E-doc / \ Forum </a>
+  <input class="form-control form-control-dark" type="text" placeholder="Search" aria-label="Search">
+  
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" th:href="@{/dashboard}">dashboard</a>
+    </li>
+  </ul>
+  
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" th:href="@{/}">espace public</a>
+    </li>
+  </ul>
+  
+  <ul class="navbar-nav px-3">
+     <li class="nav-item text-nowrap">
+      <a class="nav-link" th:href="@{/com/forum}">Forum / home</a>
+    </li>
+  </ul>
+  
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" th:href="@{/logout}">Sign out</a>
+    </li>
+  </ul>
+  
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div layout:fragment="content"></div>
+  </div>
+</div>
+
+    <div th:replace="fragements/footerAdmin :: footer"></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script th:src="@{/js/bootstrap/jquery.js}" ></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script  th:src="@{/js/popper.min.js}"></script>
+    <script  th:src="@{/js/Chart.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <script th:src="@{/js/holder.min.js}"></script>
+    <script th:src="@{/js/dashboard.js}"></script>   
+    <script th:src="@{/js/forum.js}"></script>   
+    <script type="text/javascript">
+              $(".btn-danger").on("click",function(e){
+            	  
+            	  var r=window.confirm(" confirmation de la suppression ??!!");
+            	  if(r==false){
+            		  e.preventDefault();
+            	  }else{return}
+              })
+              
+             
+    </script>
+ </body>
+</html>

@@ -1,0 +1,60 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+
+	       <main role="main" >
+	       
+		     <hr/>
+	       <h3>liste des documents enregestrés </h3>
+	        <hr/>
+	        <table class="table">
+		        <thead> 
+		        	<tr>
+		        		<th>#</th>
+		        		<th>titre</th>
+		        		<th>theme</th>
+		        		<th>langue</th>
+		        		<th>discipline</th>
+		        		<th>#pages</th>
+		        		<th>liens</th>
+		        		<th>proprietaire</th>
+		        		<th>Action</th>
+		        	</tr>
+		        </thead>
+		        <tbody>
+		        	   <tr th:each="e:${docs}">
+		        	   		<td th:text="${e.id_document}"></td>
+		        	   		<td th:text="${e.titre}"></td>
+		        	   		<td th:text="${e.theme}"></td>
+		        	   		<td th:text="${e.langue}"></td>
+		        	   		<td th:text="${e.discipline}"></td>
+		        	   		<td th:text="${e.nombrePage}"></td>
+		        	   		<td>
+		        	   		    <a th:href="${e.lien}" class="btn btn-secondry"><span data-feather="external-link"></span></a>
+		        	   		    <a th:href="${e.lien_auxilliaire}" class="btn btn-secondry"><span data-feather="external-link"></span></a>
+		        	   		</td>
+		        	   		<td th:text="${e.proprietaire.nom}+' '+${e.proprietaire.prenom}+' / ' +${e.proprietaire.email} "></td>
+		        	   		<td>
+		        	   		    <a id="delete" th:href="@{/bookmark/delete/}+${e.id_document}" class="btn btn-danger delete">supp</a>
+		        	   		</td>
+		        	   </tr>
+		        	
+		        </tbody>
+	        </table>
+	       </main>
+          </div>
+          
+ </body>
+ </html>

@@ -1,0 +1,103 @@
+<nav class="col-md-2 d-none d-md-block bg-light sidebar" th:fragment="menu">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" th:href="@{/}">
+              <span data-feather="external-link"></span>
+              espace public 
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <span data-feather="home"></span>
+              Dashboard <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">
+              <span data-feather="file"></span>
+              documents
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/dashboard/admin/etudiants}">
+              <span data-feather="user"></span>
+              Etudiants
+            </a>	
+          </li>
+          
+           <li class="nav-item">
+            <a class="nav-link" th:href="@{/dashboard/admin/prof}">
+              <span data-feather="users"></span>
+              Professeurs
+            </a>	
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/dashboard/admin/filieres}">
+              <span data-feather="codepen"></span>
+              Filieres
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/com/forum}">
+              <span data-feather="message-square"></span>
+              Forum
+            </a>
+          </li>
+          
+          
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Profile </span>
+          <a class="d-flex align-items-center text-muted" href="#">
+            <span data-feather="settings"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="eye"></span>
+              Consulter
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="edit"></span>
+              Modifier
+            </a>
+          </li>
+         <li class="nav-item">
+            <a class="nav-link" th:href="@{/dashboard/admin/calendar}">
+              <span data-feather="calendar"></span>
+              Agenda
+            </a>
+          </li>
+        </ul>
+        
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Reseaux socieaux </span>
+          <a class="d-flex align-items-center text-muted" href="#">
+            <span data-feather="book"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="facebook"></span>
+              Facebook
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="linkedin"></span>
+              linkedin
+            </a>
+          </li>
+         
+        </ul>
+        
+      </div>
+    </nav>

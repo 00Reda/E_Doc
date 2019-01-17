@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/default">
+  <body>
+		  <div id="page" layout:fragment="content">
+		  <main role="main">
+		
+		      <section class="jumbotron text-center">
+		        <div class="container">
+		          <h1 class="jumbotron-heading">E-Docs :efficace et cohérant. </h1>
+		          <p class="lead text-muted">Espace numérique de téléchargement et de communication .</p>
+		          <p>
+		             <form action="/search" method="get">
+		                 <div class="row">
+		                  <div class="form-group col-sm-9">
+						    <input name="q" style="height: 50px" type="text" class="form-control" id="search" placeholder="mot clé :" th:value="${q}">
+						  </div>	
+						   <button style="height: 50px" type="submit" class="btn btn-primary  col-sm-3">recherche</button>
+						  </div> 
+		             </form>
+		            
+		            <a href="#" class="btn btn-secondary my-2" data-toggle="modal" data-target=".bd-example-modal-lg" >recherche Avancée</a>
+		          </p>
+		        </div>
+		      </section>
+		
+		      <div class="album py-5 bg-light">
+		        <div class="container">
+		          <div class="row">
+		            <div class="col-md-4"  th:each="e : ${pages.getContent()}" >
+		              <div class="card mb-4 box-shadow">
+		               <!--   <img class="card-img-top" th:src="${'https://loremflickr.com/320/240/book?random='+e.id_document}" alt="Card image cap">-->
+		                <div class="card-body card-body-me">
+		                  <p class="card-text" style="font-size: 26px"><b th:text="${e.titre+' ('+e.nombrePage+' pages)'}"></b><SUP th:text=" ${ ' ' +e.langue}"></SUP></p>
+		                  <p> Ajouté par : <big th:text="${e.proprietaire.nom+' '+e.proprietaire.prenom }"></big> </p>
+		                  <p> le : <big th:text="${e.dateAjout }"></big> </p>
+		                  
+			               <div class="d-flex justify-content-between align-items-center">
+		                    <div class="btn-group" sec:authorize="hasAnyRole({'ROLE_PROF','ROLE_ETUDIANT','ROLE_ADMIN'} )">
+		                        
+		                      <a class="btn btn-sm btn-outline-secondary" th:href="${e.lien}" ><i class="fas fa-download"></i></a>
+		                      <a class="btn btn-sm btn-outline-secondary" th:href="${e.lien_auxilliaire}"><i class="fas fa-file-download"></i></a>
+		                      
+		                    </div>
+		                    <div class="btn-group" >
+		                    <a class="btn btn-sm btn-outline-secondary" th:href="@{/bookmark/add/}+${e.id_document}" target="_blank" sec:authorize="hasAnyRole({'ROLE_PROF','ROLE_ETUDIANT','ROLE_ADMIN'} )">
+		                        <i class='far fa-bookmark' style='font-size:24px'></i>
+		                    </a>
+		                      <a sec:authorize="hasRole({'ROLE_ADMIN'} )" class="btn btn-sm btn-outline-danger" th:href="@{/doc/edit/}" ><i class="fas fa-trash-alt"></i></a>
+		                    </div>
+		                  </div>
+		                  <br/>
+		                  <div class="d-flex justify-content-between align-items-center" style="position:absolute;right: 20px;bottom: 10px;">
+		                    <small class="text-muted"><p class="card-text"><b th:text="${e.discipline +' / '+e.theme}"></b></p></small>
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+		           
+		          
+		          </div>
+		          <div class="row">
+		          
+		                <nav aria-label="...">
+						  <ul class="pagination pagination-lg pages" th:if="! ${advanced}" >
+						    
+						    <li class="page-item" th:each="i : ${#numbers.sequence( 1,pages.getTotalPages() ,1)}">
+						      <a class="page-link" th:href="${path+i+query}" tabindex="-1" th:text="${i}"></a>
+						    </li>
+						    
+						    
+						  </ul>
+						</nav>
+		          
+		          </div>
+		        </div>
+		      </div>
+		
+		    </main>
+		    
+		    	<!-- Modal -->
+			<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id='searchModel' aria-hidden="true">
+ 			 <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">recherche avancée</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form th:action="@{/advencedSearch}" method="get" th:object="${document}">
+					  <div class="form-group row">
+					    <label for="inputEmail3" class="col-sm-2 col-form-label">Titre</label>
+					    <div class="col-sm-10">
+					      <input type="text" name="titre" th:field="*{titre}" class="form-control" id="inputEmail3" placeholder="titre">
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="inputPassword3" class="col-sm-2 col-form-label">Theme</label>
+					    <div class="col-sm-10">
+					      <input type="text" name="theme" th:field="*{theme}" class="form-control" id="inputPassword3" placeholder="theme">
+					    </div>
+					  </div>
+					  
+					  <div class="form-group row">
+					    <label for="inputPassword3" class="col-sm-2 col-form-label">Discipline</label>
+					    <div class="col-sm-10">
+					      <input type="text" name="discipline" th:field="*{discipline}" class="form-control" id="inputPassword3" placeholder="Discipline">
+					    </div>
+					  </div>
+					  
+					  <div class="form-group row">
+					    <label for="inputPassword3" class="col-sm-2 col-form-label">Proprietaire :</label>
+					    <div class="col-sm-10">
+					      <input type="text" name="lien"  th:field="*{proprietaire.nom}" class="form-control" id="inputPassword3" placeholder="Proprietaire">
+					    </div>
+					  </div>
+					  
+					  <div class="form-group row">
+					    <label for="inputPassword3" class="col-sm-2 col-form-label">langue :</label>
+					    <div class="col-sm-10">
+					      <input type="text" name="langue" th:field="*{langue}" class="form-control" id="inputPassword3" placeholder="langue">
+					    </div>
+					  </div>
+					  
+					  <div class="form-group row">
+					    <label for="inputPassword3" class="col-sm-2 col-form-label">Date d'ajout :</label>
+					    <div class="col-sm-10">
+					      <input type="date" pattern="dd-mm-yyy" th:field="*{dateAjout}" name="dateAjout" class="form-control" id="inputPassword3" placeholder="date d'ajout ">
+					    </div>
+					  </div>
+					  <input type="submit"  value="rechercher" class="btn btn-secondary"/>
+					</form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			         
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+          </div>
+        
+			
+		
+          
+ </body>
+</html>

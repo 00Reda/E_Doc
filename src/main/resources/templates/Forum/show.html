@@ -1,0 +1,108 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/forum">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-12">
+
+	       <main role="main" >
+	       
+		    
+	        <div class="container col-md-10">
+	        	 <hr/>
+			          <h3 class="center">la question : </h3>
+			         <hr/>
+	          <div class="row">
+	      			 
+		          <div class="list-group col-md-12">
+					  <div class=" list-group-item">
+					    <div class="d-flex w-100 justify-content-between">
+					      <h3 class="mb-1" th:text="${e.sujet}"></h3>
+					    </div>
+					    <p class="mb-1" th:text="${e.description}"></small>
+					    <p>
+		             		<big class="badge badge-pill badge-dark" th:text="${e.owner.nom}+' '+${e.owner.prenom}"></big>  
+		             		<big class="badge badge-pill badge-dark" th:text="${e.owner.roles[0].role}"></big><br/>
+		             		<span class="badge badge-pill badge-dark" th:text="${e.dateAjout}"></span>
+		                </p>
+		                <a href="#" th:data-id="${e.id_question}" class="btn btn-info" id="reply">Repondre</a>
+					  </div>
+				  </div>
+				  <div class="list-group col-md-11 offset-md-1">
+					  <div style="margin-top:15px" class=" list-group-item " th:each="rep:${e.repenses}">
+					    <div class="d-flex w-100 justify-content-between">
+					      <h5 class="mb-1" th:text="${rep.rependeur.nom}+' '+${rep.rependeur.prenom}">
+					      
+					      </h5>
+					      
+					      <div class="btn-group btn-group-sm" style="margin-bottom: 10px" role="group" aria-label="Basic example" th:if="${user.id_user}==${rep.rependeur.id_user} or ${user.roles[0].role}=='ADMIN' ">
+							  <a href="#" th:data-id="${rep.id_QR}" class="btn btn-secondary edit-reply">modifer</a>
+							  <a th:href="@{/com/forum/reponse/delete?id=}+${rep.id_QR}" class="btn btn-danger">supp</a>
+						   </div>
+					    </div>
+					    <p class="mb-1" th:text="${rep.repense}" th:id="${rep.id_QR}"></p>
+					    <p>
+		             		<span class="badge badge-pill badge-dark" th:text="${rep.dateAjout}"></span>
+		             		<big class="badge badge-pill badge-dark" th:text="${rep.rependeur.roles[0].role}"></big><br/>
+		             		
+		                </p>
+					  </div>
+				  </div>
+				  
+		      </div>
+	        </div>
+	        
+	       </main>
+	       <!-- add Form begin  -->
+          
+
+			<div class="modal fade bd-example-modal-lg" id="AddReplyModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+			    
+			     <div class="modal-header">
+			        <h3 class="modal-title" id="exampleModalLabel">Ajout une reponse</h3>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      
+			      <div class="modal-body">
+			          <form th:action="@{/com/forum/repense/}" th:data-action='@{/com/forum/repense/}' method="post" th:object="${repense}" style="margin:15px" id="addReplyForm">
+				        <div class="alert alert-danger" role="alert" th:if="${error}"> 
+				          <p th:text="${error}"> </p>
+				        </div>  
+				        
+				        <div class="form-group">
+				        	<label for="inputEmail3" class="col-sm-2 col-form-label">reponse</label>
+				            <textarea class="form-control" th:field="*{repense}" id="reponse" rows="4" placeholder="repense" name="repense" required="required"></textarea>
+				        </div>
+				        
+				        <hr/>
+				        <div class="form-group">
+				            <button type="submit" class="btn btn-primary btn-block">Soumettre</button> 
+				        </div>
+				   	    </form>
+			      </div>
+			      
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        
+			      </div>
+			    </div>
+			  </div>
+			</div>
+          <!-- add Form end  -->
+          </div>
+          
+ </body>
+ </html>

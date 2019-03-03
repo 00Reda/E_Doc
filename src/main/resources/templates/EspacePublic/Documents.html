@@ -10,7 +10,7 @@
 		
 		      <section class="jumbotron text-center">
 		        <div class="container">
-		          <h1 class="jumbotron-heading">E-Docs :efficace et cohérant. </h1>
+		          <h1 class="jumbotron-heading">faculte manager</h1>
 		          <p class="lead text-muted">Espace numérique de téléchargement et de communication .</p>
 		          <p>
 		             <form action="/search" method="get">
@@ -18,13 +18,16 @@
 		                  <div class="form-group col-sm-9">
 						    <input name="q" style="height: 50px" type="text" class="form-control" id="search" placeholder="mot clé :" th:value="${q}">
 						  </div>	
-						   <button style="height: 50px" type="submit" class="btn btn-primary  col-sm-3">recherche</button>
+						   <button style="height: 50px" type="submit" class="btn btn-outline-dark  col-sm-3">recherche</button>
 						  </div> 
 		             </form>
 		            
-		            <a href="#" class="btn btn-secondary my-2" data-toggle="modal" data-target=".bd-example-modal-lg" >recherche Avancée</a>
+		            <a href="#" class="btn btn-outline-secondary my-2" data-toggle="modal" data-target=".bd-example-modal-lg" >recherche Avancée</a>
 		          </p>
 		        </div>
+		        <div class="text-success" 
+		          th:text="${#httpServletRequest.getParameter('info')}"> 
+		          </div>
 		      </section>
 		
 		      <div class="album py-5 bg-light">
@@ -49,7 +52,7 @@
 		                    <a class="btn btn-sm btn-outline-secondary" th:href="@{/bookmark/add/}+${e.id_document}" target="_blank" sec:authorize="hasAnyRole({'ROLE_PROF','ROLE_ETUDIANT','ROLE_ADMIN'} )">
 		                        <i class='far fa-bookmark' style='font-size:24px'></i>
 		                    </a>
-		                      <a sec:authorize="hasRole({'ROLE_ADMIN'} )" class="btn btn-sm btn-outline-danger" th:href="@{/doc/edit/}" ><i class="fas fa-trash-alt"></i></a>
+		                      <a sec:authorize="hasRole({'ROLE_ADMIN'} )" class="btn btn-sm btn-outline-danger" th:href="@{/doc/admin/delete(id=${e.id_document})}" ><i class="fas fa-trash-alt"></i></a>
 		                    </div>
 		                  </div>
 		                  <br/>
@@ -133,11 +136,11 @@
 					      <input type="date" pattern="dd-mm-yyy" th:field="*{dateAjout}" name="dateAjout" class="form-control" id="inputPassword3" placeholder="date d'ajout ">
 					    </div>
 					  </div>
-					  <input type="submit"  value="rechercher" class="btn btn-secondary"/>
+					  <input type="submit"  value="rechercher" class="btn btn-outline-secondary"/>
 					</form>
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
 			         
 			      </div>
 			    </div>

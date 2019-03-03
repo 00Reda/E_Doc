@@ -38,18 +38,18 @@
 	          <div class="col-6" >
 	           <div class="card" >
                  <div class="card-body" th:object="${etudiant}">
-                 <label class="col-form-label"><strong>CNE</strong></label>
+                <label class="col-form-label"><strong>CNE</strong></label>
                  <p class="form-control" th:text="*{cne}">
-                 </p>
+                 </p> 
                  <label class="col-form-label"><strong>Nom</strong></label>
                  <p class="form-control" th:text="*{nom}">
                  </p>
                  <label class="col-form-label"><strong>Prenom</strong></label>
                  <p class="form-control" th:text="*{prenom}">
                  </p>
-                 <label class="col-form-label"><strong>Filiere</strong></label>
+                   <label class="col-form-label"><strong>Filiere</strong></label>
                  <p class="form-control" th:text="*{filiere.nom}">
-                 </p>
+                 </p>  
                  <label class="col-form-label"><strong>Email</strong></label>
                  <p class="form-control" th:text="*{email}">
                  </p>
@@ -57,6 +57,20 @@
                  <p class="form-control" th:text="*{date_creation}">
                  </p>
 	            </div>
+	          </div>
+	          </div>
+	          <div class="col-2 " >
+	          <div class="card">
+	          <div class="card-body">
+            <div >
+            <div th:if="!${etudiant.active}">
+            <a class="btn btn-outline-info" th:href="@{/dashboard/active(id=${etudiant.id_user})}">Activer</a>
+            </div>
+            <div th:if="${etudiant.active}">
+            <a class="btn btn-outline-danger" th:href="@{/dashboard/desactive(id=${etudiant.id_user})}">Desactiver</a>
+           </div>
+            </div>
+	        </div>
 	          </div>
 	          </div>
 	          </div>

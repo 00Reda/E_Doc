@@ -34,7 +34,7 @@
 		                      <a class="btn btn-sm btn-outline-secondary" th:href="${documents.lien_auxilliaire}"><span data-feather="download-cloud"></span></a>
 		                    </div>
 		                    <small class="text-muted"><p class="card-text"><b th:text="${documents.discipline +' / '+documents.theme}"></b></p></small>
-		                  	<a class="btn btn-sm btn-danger" onclick=" return confirm('Vous etes sur le point de supprimer un document de votre Site??')" th:href="@{/dashboard/admin/prof/document/delete(id=${documents.id_document},email=${prof.email})}"><span data-feather="trash-2"></span></a>
+		                  	<a class="btn btn-sm btn-danger" onclick=" return confirm('Vous etes sur le point de supprimer un document de votre Site??')" th:href="@{/dashboard/admin/prof/document/delete(id=${documents.id_document},email=${prof.id_user})}"><span data-feather="trash-2"></span></a>
 		                  </div>
 		                </div>
 		              </div>

@@ -34,7 +34,7 @@
 		             		<big class="badge badge-pill badge-dark" th:text="${e.owner.roles[0].role}"></big><br/>
 		             		<span class="badge badge-pill badge-dark" th:text="${e.dateAjout}"></span>
 		                </p>
-		                <a href="#" th:data-id="${e.id_question}" class="btn btn-info" id="reply">Repondre</a>
+		                <a href="#" th:data-id="${e.id_question}" class="btn btn-outline-info" id="reply">Repondre</a>
 					  </div>
 				  </div>
 				  <div class="list-group col-md-11 offset-md-1">
@@ -45,8 +45,8 @@
 					      </h5>
 					      
 					      <div class="btn-group btn-group-sm" style="margin-bottom: 10px" role="group" aria-label="Basic example" th:if="${user.id_user}==${rep.rependeur.id_user} or ${user.roles[0].role}=='ADMIN' ">
-							  <a href="#" th:data-id="${rep.id_QR}" class="btn btn-secondary edit-reply">modifer</a>
-							  <a th:href="@{/com/forum/reponse/delete?id=}+${rep.id_QR}" class="btn btn-danger">supp</a>
+							  <a href="#" th:data-id="${rep.id_QR}" class="btn btn-outline-secondary edit-reply">modifer</a>
+							  <a th:href="@{/com/forum/reponse/delete?id=}+${rep.id_QR}" class="btn btn-outline-danger">supp</a>
 						   </div>
 					    </div>
 					    <p class="mb-1" th:text="${rep.repense}" th:id="${rep.id_QR}"></p>
@@ -89,13 +89,13 @@
 				        
 				        <hr/>
 				        <div class="form-group">
-				            <button type="submit" class="btn btn-primary btn-block">Soumettre</button> 
+				            <button type="submit" class="btn btn-outline-primary btn-block">Soumettre</button> 
 				        </div>
 				   	    </form>
 			      </div>
 			      
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
 			        
 			      </div>
 			    </div>

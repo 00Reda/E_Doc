@@ -1,0 +1,70 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+
+	       <main role="main" >
+	       
+		     <hr/>
+	       <h3>le document est enregisté par : </h3>
+	          <div class="col-md-4 offset-4" >
+		              <div class="card mb-4 box-shadow">
+		               <!--   <img class="card-img-top" th:src="${'https://loremflickr.com/320/240/book?random='+e.id_document}" alt="Card image cap">-->
+		                <div class="card-body card-body-me">
+		                  <p class="card-text" style="font-size: 26px"><b th:text="${e.titre+' ('+e.nombrePage+' pages)'}"></b><SUP th:text=" ${ ' ' +e.langue}"></SUP></p>
+		                  <p> Ajouté par : <big th:text="${e.proprietaire.nom+' '+e.proprietaire.prenom }"></big> </p>
+		                  <p> le : <big th:text="${e.dateAjout }"></big> </p>
+		                  
+			               <div class="d-flex justify-content-between align-items-center">
+		                    <div class="btn-group" sec:authorize="hasAnyRole({'ROLE_PROF','ROLE_ETUDIANT','ROLE_ADMIN'} )">
+		                        
+		                      <a class="btn btn-sm btn-outline-secondary" th:href="${e.lien}" ><i class="fas fa-download"></i></a>
+		                      <a class="btn btn-sm btn-outline-secondary" th:href="${e.lien_auxilliaire}"><i class="fas fa-file-download"></i></a>
+		                      
+		                    </div>
+		                    <div class="btn-group" >
+		                    <a class="btn btn-sm btn-outline-secondary" th:href="@{/bookmark/add/}+${e.id_document}" target="_blank" sec:authorize="hasAnyRole({'ROLE_PROF','ROLE_ETUDIANT','ROLE_ADMIN'} )">
+		                        <i class='far fa-bookmark' style='font-size:24px'></i>
+		                    </a>
+		                    </div>
+		                  </div>
+		                  <br/>
+		                  <div class="d-flex justify-content-between align-items-center" style="position:absolute;right: 20px;bottom: 10px;">
+		                    <small class="text-muted"><p class="card-text"><b th:text="${e.discipline +' / '+e.theme}"></b></p></small>
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+	        <hr/>
+	        <table class="table">
+		        <thead> 
+		        	<tr>
+		        		<th>nom</th>
+		        		<th>prenom</th>
+		        		<th>role</th>
+		        	</tr>
+		        </thead>
+		        <tbody>
+		        	   <tr th:each="e:${list}">
+		        	   		<td th:text="${e.nom}"></td>
+		        	   		<td th:text="${e.prenom}"></td>
+		        	   		<td> <span th:text="${e.roles[0].role}" class="badge badge-secondary"></span></td>
+		        	   </tr>
+		        </tbody>
+	        </table>
+	       </main>
+          </div>
+          
+ </body>
+ </html>

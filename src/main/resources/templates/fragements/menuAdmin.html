@@ -8,7 +8,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">
+            <a class="nav-link active" th:href="@{/dashboard/admin}">
               <span data-feather="home"></span>
               Dashboard <span class="sr-only">(current)</span>
             </a>
@@ -17,6 +17,12 @@
             <a class="nav-link" th:href="@{/}">
               <span data-feather="file"></span>
               documents
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/dashboard/admin/bookmarks}">
+              <span data-feather="file"></span>
+              Mes Bookmarks
             </a>
           </li>
           <li class="nav-item">
@@ -32,6 +38,9 @@
               Professeurs
             </a>	
           </li>
+          
+          
+           
           
           <li class="nav-item">
             <a class="nav-link" th:href="@{/dashboard/admin/filieres}">
@@ -49,7 +58,29 @@
           
           
         </ul>
-
+        
+        
+		<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Administration </span>
+          <a class="d-flex align-items-center text-muted" href="#">
+            <span data-feather="settings"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/dashboard/admin/list}">
+              <span data-feather="users"></span>
+              lister
+            </a>	
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/dashboard/admin/add}">
+              <span data-feather="edit"></span>
+              Ajouter
+            </a>
+          </li>
+        
+        </ul>
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>Profile </span>
           <a class="d-flex align-items-center text-muted" href="#">
@@ -58,13 +89,13 @@
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" th:href="@{/dashboard/admin/info}">
               <span data-feather="eye"></span>
               Consulter
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" th:href="@{/dashboard/admin/edit}">
               <span data-feather="edit"></span>
               Modifier
             </a>

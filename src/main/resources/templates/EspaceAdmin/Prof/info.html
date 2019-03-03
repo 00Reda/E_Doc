@@ -32,8 +32,10 @@
               <td th:text="${professeur.email}"></td>
               <td th:text="${professeur.active}"></td>
               <td>
-               <a class="btn btn-info" th:href="@{/dashboard/admin/prof/documents(id=${professeur.email},page=0)}"><span data-feather="list"></span></a>
-               <a class="btn btn-danger" onclick=" return confirm('Vous etes sure de supprimer le prof et ses documents??')" th:href="@{/dashboard/admin/delete/prof(id=${professeur.email})}"><span data-feather="delete"></span></a>
+               <a class="btn btn-info" th:href="@{/dashboard/admin/prof/documents(id=${professeur.id_user},page=0)}"><span data-feather="list"></span></a>
+               <a class="btn btn-outline-info" th:if="!${professeur.active}" th:href="@{/dashboard/active(id=${professeur.id_user})}"><span data-feather="power"></a>
+	            <a class="btn btn-outline-dark" th:if="${professeur.active}" th:href="@{/dashboard/desactive(id=${professeur.id_user})}"><span data-feather="eye-off"></a>
+               <a class="btn btn-danger" onclick=" return confirm('Vous etes sure de supprimer le prof et ses documents??')" th:href="@{/dashboard/admin/delete/prof(id=${professeur.id_user})}"><span data-feather="delete"></span></a>
               </td>
           </tr>
           </table>

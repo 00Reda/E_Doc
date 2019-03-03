@@ -41,6 +41,7 @@
        *  On load, called to load the auth2 library and API client library.
        */
       function handleClientLoad() {
+    	if(authorizeButton && signoutButton )
         gapi.load('client:auth2', initClient);
       }
 
@@ -73,14 +74,21 @@
        */
       function updateSigninStatus(isSignedIn) {
         if (isSignedIn) {
-          authorizeButton.style.display = 'none';
-          signoutButton.style.display = 'block';
+        	if(authorizeButton && signoutButton ){
+        		  authorizeButton.style.display = 'none';
+    	          signoutButton.style.display = 'block';
+    	          loadCalendarsContent();
+        	}
+	        
           
           //listUpcomingEvents();
-          loadCalendarsContent();
+          
         } else {
-          authorizeButton.style.display = 'block';
-          signoutButton.style.display = 'none';
+        	if(authorizeButton && signoutButton ){
+        		authorizeButton.style.display = 'block';
+                signoutButton.style.display = 'none';
+        	}
+          
         }
       }
 
@@ -107,6 +115,7 @@
       function appendPre(nom,date,calendar) {
     	 
         var pre = document.getElementById('content');
+       
         var html = pre.innerHTML;
         var newHtml='<tr style="background-color:'+calendar.backgroundColor+'"><td>'+nom+'</td><td>'+date+'</td><td>'+calendar.summary+'</td></tr>';
         pre.innerHTML=html+newHtml;

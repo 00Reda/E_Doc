@@ -23,16 +23,17 @@
 	      <div class="card-body">
 	       <table class="table table-striped">
           <tr>
-             <th>Email</th> <th>Nom</th> <th>Prenom</th> <th>Filiere</th> <th>Action</th>
+             <th>Email</th> <th>Nom</th> <th>Prenom</th> <th>Filiere</th> <th>statut</th> <th>Action</th>
           </tr>
           <tr th:each="etudiant : ${etudiants}">
               <td th:text="${etudiant.email }"></td>
               <td th:text="${etudiant.nom }"></td>
               <td th:text="${etudiant.prenom}"></td>
               <td th:text="${etudiant.filiere.nom}"></td>
+              <td th:text="${etudiant.active}"></td>
               <td>
                 <a class="btn btn-info" th:href="@{/dashboard/admin/info/etudiant(id=${etudiant.id_user})}"><span data-feather="plus-circle"></span></a>
-               <a class="btn btn-danger" th:href="@{/dashboard/admin/delete/etudiant(id=${etudiant.id_user})}"><span data-feather="trash-2"></span></a>
+               <a class="btn btn-danger delete" th:href="@{/dashboard/admin/delete/etudiant(id=${etudiant.id_user})}"><span data-feather="trash-2"></span></a>
               </td>
           </tr>
           </table>

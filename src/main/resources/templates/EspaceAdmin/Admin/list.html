@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-9 ml-sm-auto col-lg-10 px-4 offset-md-2">
+
+	<main role="main">
+	      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	        <h1 class="h2">Les Administrateurs </h1>
+	       
+	      </div>
+	      <div class="row">
+	      
+	      <div class="col-12">
+	      <div>
+	      
+	      <div class="card-body">
+	       <table class="table table-striped">
+          <tr>
+            <th>Nom</th> <th>Prenom</th> <th>Email</th> 
+          </tr>
+          <tr th:each="admin : ${list}">
+              <td th:text="${admin.nom }"></td>
+              <td th:text="${admin.prenom}"></td>
+              <td th:text="${admin.email}"></td>
+          </tr>
+          </table>
+	     
+	   </div>
+	   </div>
+      </div>
+     </div>
+    </main>
+    </div>
+    </body>
+    </html>

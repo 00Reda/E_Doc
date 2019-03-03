@@ -24,7 +24,7 @@
 			      <h3 class="center col-md-11 ">liste des questions  
 			      
 			      </h3>
-			      <button class="btn btn-secondary col-md-1" id="addQuestion"><i class="fas fa-plus-square"></i></button>
+			      <button class="btn btn-outline-secondary col-md-1" id="addQuestion"><i class="fas fa-plus-square"></i></button>
 	        	  
 	              
 	          </div>  
@@ -37,8 +37,8 @@
 					      <h3 class="mb-1" th:text="${e.sujet}" th:id="sujet+${e.id_question}"></h3>
 					       <div class="btn-group btn-group-sm" style="margin-bottom: 10px" role="group" aria-label="Basic example" >
 							 <div th:if="${user.id_user}==${e.owner.id_user} or ${user.roles[0].role}=='ADMIN' ">
-							  <a href="#" th:data-id="${e.id_question}" class="btn btn-secondary editQuestion">modifer</a>
-							  <a th:href="@{/com/forum/question/delete?id=}+${e.id_question}" class="btn btn-danger">supp</a>
+							  <a href="#" th:data-id="${e.id_question}" class="btn btn-outline-secondary editQuestion">modifer</a>
+							  <a th:href="@{/com/forum/question/delete?id=}+${e.id_question}" class="btn btn-outline-danger">supp</a>
 							 </div>
 						   </div>
 						    
@@ -49,7 +49,7 @@
 		             		<big class="badge badge-pill badge-dark" th:text="${e.owner.roles[0].role}"></big><br/>
 		             		<span class="badge badge-pill badge-dark" th:text="${e.dateAjout}"></span>
 		                </p>
-		                 <a th:href="@{/com/forum/show?id=}+${e.id_question}" class="btn btn-info">voir</a>
+		                 <a th:href="@{/com/forum/show?id=}+${e.id_question}" class="btn btn-outline-info">voir</a>
 		                 
 					  
 					  </div>
@@ -91,13 +91,13 @@
 				        
 				        <hr/>
 				        <div class="form-group">
-				            <button type="submit" class="btn btn-primary btn-block">Soumettre</button> 
+				            <button type="submit" class="btn btn-outline-primary btn-block">Soumettre</button> 
 				        </div>
 				   	    </form>
 			      </div>
 			      
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
 			        
 			      </div>
 			    </div>

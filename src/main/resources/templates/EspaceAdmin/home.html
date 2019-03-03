@@ -11,13 +11,24 @@
 		  <div id="page" layout:fragment="content" class="col-md-9 ml-sm-auto col-lg-10 px-4 offset-md-2">
 
 	<main role="main" >
-	      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	      <div class="pt-3 pb-2 mb-3 border-bottom">
 	        <h1 class="h2">Dashboard</h1>
 	       
 	      </div>
 	
-	      <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
+	         <div class="row">
+	           <h5 class="h5 ml-3 pb-2 border-bottom">annuellement</h5>
+	         	<canvas th:data-url="@{/dashboard/admin/statisticsY}" class="my-4 w-100" id="chartY" width="900" height="380"></canvas>
+	         </div>
+	         
+	         <div class="row" style="height:300px">
+	         <h5 class="h5 ml-3 pb-2 border-bottom">mensuellement</h5>
+	         	<canvas th:data-url="@{/dashboard/admin/statisticsMY}" class="my-4 w-100" id="chartMY" width="900" height="380"></canvas>
+	         </div>
+	
+	      
+          
+          
      
     </main>
     </div>

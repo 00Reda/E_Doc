@@ -47,8 +47,9 @@
 		        	   		</td>
 		        	   		<td th:text="${e.dateAjout}"></td>
 		        	   		<td>
-		        	   			<a th:href="@{/docs/prof/form?id=}+${e.id_document}" class="btn btn-primary">Modifier</a>
-		        	   		    <a id="delete" th:href="@{/docs/prof/delete/}+${e.id_document}" class="btn btn-danger delete">supp</a>
+		        	   			<a th:href="@{/docs/prof/form?id=}+${e.id_document}" class="btn btn-outline-primary">Modifier</a>
+		        	   		    <a id="delete" th:href="@{/docs/prof/delete/}+${e.id_document}" class="btn btn-outline-danger delete">supp</a>
+		        	   		    <a id="delete" th:href="@{/docs/prof/views(id=${e.id_document})}" class="btn btn-outline-info"><i class="fas fa-eye"></i></a>
 		        	   		</td>
 		        	   </tr>
 		        	

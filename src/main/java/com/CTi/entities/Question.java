@@ -30,6 +30,8 @@ public class Question {
 	
 	private String sujet ; 
 	
+	private String lien ;
+	
 	@Column(length=1000)
 	private String description;
 	

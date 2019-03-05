@@ -47,6 +47,10 @@ public class Document implements Serializable,Comparable<Document>{
 	@JoinColumn(name="id_proprietaire" )
 	private Utilisateur proprietaire;
 	
+	@ManyToOne
+	@JoinColumn(name="filiere" )
+	private Filiere filiere;
+	
 	@ManyToMany(mappedBy="documentsEnregistres")
 	private List<Utilisateur> enregistrerPar;
 
@@ -60,6 +64,7 @@ public class Document implements Serializable,Comparable<Document>{
 	
 	@Override
 	public int compareTo(Document o) {
+		
 		// TODO Auto-generated method stub
 		if(this.id_document==o.getId_document()) return 0;
 		return 1;

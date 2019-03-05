@@ -29,7 +29,11 @@ public class Etudiant extends Utilisateur implements Serializable{
 	@JoinColumn(name="id_filiere")
 	private Filiere filiere;
 	
-	// git test
+		
+	private int nb_point ; 
+	
+	private int nb_question ; 
+	
 	
 	
 	

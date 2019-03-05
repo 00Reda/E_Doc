@@ -6,7 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.management.relation.Role;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -38,10 +40,17 @@ import com.CTi.repository.IEspacePublicRepository;
 import com.CTi.repository.ProfesseurRep;
 import com.CTi.repository.RoleRep;
 import com.CTi.repository.UtilisateurRep;
+import com.CTi.service.MailService;
 
 @Controller
 public class EspacePublicController {
 
+	 public static int MAX_POINTS_PER_USER=15;
+	 public static String STUDENT_MASSAR_MAIL_HOST="taalim.ma";
+	
+	 @Autowired
+	 private MailService mailService ;
+	 
 	 @Autowired
 	 private IEspacePublicRepository espacePublicRep ;
 	 
@@ -150,16 +159,33 @@ public class EspacePublicController {
      }
 	 
 	 @RequestMapping(value="/account/student/action" , method=RequestMethod.POST)
-     public String CreateStudantAccountAction(Model model, Etudiant e) {
+     public String CreateStudantAccountAction(Model model, Etudiant e , HttpServletRequest request) {
     	 
 		 try {
 			 ArrayList<Roles> r=new ArrayList<>();
 			 r.add(roleRep.getOne("ETUDIANT"));
 			 Date date=new Date();
+			 e.setNb_point(0);
+			 e.setNb_question(MAX_POINTS_PER_USER);
 			 e.setDate_creation(date);
 			 e.setRoles(r);
+			 e.setActive(false);
+			 e.setToken(RandomStringUtils.random(100, true, true));
 			 e.setPassword(SecurityConfig.crypter(e.getPassword()));
-			 etudiantRep.save(e);
+			 e = etudiantRep.save(e);
+			 
+			 // send a mail to the user
+			 
+			 try {
+				String baseUrl = String.format("%s://%s:%d/",request.getScheme(),  request.getServerName(), request.getServerPort());
+				String url = baseUrl+"account/activate/"+e.getToken()+"/"+e.getId_user();
+				System.out.println(url);
+				mailService.sendMail(e, "Activation de votre compte", "Salam ; <br> pour activer votre compte <a href='"+url+"'>cliquez ici</a>");
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+				return ("/");
+			}
 			 
 		} catch (Exception e2) {      
 			// TODO: handle exception
@@ -168,6 +194,7 @@ public class EspacePublicController {
 			 model.addAttribute("filieres",filieres);
 			 model.addAttribute("etudiant",new Etudiant());
 			 model.addAttribute("error",e2.getMessage());
+			 e2.printStackTrace();
 			 return "EspacePublic/etudiant";
 		}
 		 
@@ -175,6 +202,18 @@ public class EspacePublicController {
     	 return "redirect:/login";
      }
 	 
+	 @RequestMapping(value="/account/activate/{token}/{id}")
+     public String ActivateAccount(@PathVariable String token , @PathVariable long id) {
+    	 
+		 Utilisateur user= this.userRep.getOne(id);
+		 if(user!=null) {
+			 if(token.equals(user.getToken())) {
+				 user.setActive(true);
+				 this.userRep.flush();
+			 }
+		 }
+		 return "redirect:/login";
+     }
 	 
 	 @RequestMapping(value="/account/prof")
      public String CreateProfAccountForm(Model model) {
@@ -194,6 +233,7 @@ public class EspacePublicController {
 			 Date date=new Date();
 			 e.setDate_creation(date);
 			 e.setPassword(SecurityConfig.crypter(e.getPassword()));
+			 e.setActive(false);
 			 professeurRep.save(e);
 			 
 		} catch (Exception e2) {

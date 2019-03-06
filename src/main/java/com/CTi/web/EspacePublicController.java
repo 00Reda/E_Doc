@@ -46,8 +46,8 @@ import com.CTi.service.MailService;
 public class EspacePublicController {
 
 	 public static int MAX_POINTS_PER_USER=15;
-	 public static String STUDENT_MASSAR_MAIL_HOST="taalim.ma";
-	
+	 public static String MASSAR_MAIL_HOST="taalim.ma";
+	 public static boolean MASSAR_MAIL_HOST_VERIF=false;
 	 @Autowired
 	 private MailService mailService ;
 	 
@@ -164,28 +164,63 @@ public class EspacePublicController {
 		 try {
 			 ArrayList<Roles> r=new ArrayList<>();
 			 r.add(roleRep.getOne("ETUDIANT"));
-			 Date date=new Date();
-			 e.setNb_point(0);
-			 e.setNb_question(MAX_POINTS_PER_USER);
-			 e.setDate_creation(date);
-			 e.setRoles(r);
-			 e.setActive(false);
-			 e.setToken(RandomStringUtils.random(100, true, true));
-			 e.setPassword(SecurityConfig.crypter(e.getPassword()));
-			 e = etudiantRep.save(e);
 			 
-			 // send a mail to the user
+			 // verifications 
+			 StringBuffer errors=new StringBuffer();
+			 if(MASSAR_MAIL_HOST_VERIF) {
+				 String [] m=e.getEmail().split("@");
+				 if(!m[1].equals(MASSAR_MAIL_HOST)) {
+					 errors.append("adresse email non valide : <big> code-massar@"+MASSAR_MAIL_HOST+"</big>");
+				 }
+				 
+			 }
 			 
-			 try {
-				String baseUrl = String.format("%s://%s:%d/",request.getScheme(),  request.getServerName(), request.getServerPort());
-				String url = baseUrl+"account/activate/"+e.getToken()+"/"+e.getId_user();
-				System.out.println(url);
-				mailService.sendMail(e, "Activation de votre compte", "Salam ; <br> pour activer votre compte <a href='"+url+"'>cliquez ici</a>");
-			} catch (Exception e2) {
-				// TODO: handle exception
-				e2.printStackTrace();
-				return ("/");
-			}
+			 if(e.getPassword().length()<8) {
+				 if(errors.length()!=0) errors.append(" <br> Le mot de passe doit être de 8 caractères minimum et contenir au moins 1 chiffre ");
+				 else errors.append("Le mot de passe doit être de 8 caractères minimum et contenir au moins 1 chiffre ");
+			 }
+			 
+			 
+			 
+			 // add user
+			 if(errors.length()==0) {
+				 
+				 Date date=new Date();
+				 e.setNb_point(0);
+				 e.setNb_question(MAX_POINTS_PER_USER);
+				 e.setDate_creation(date);
+				 e.setRoles(r);
+				 e.setActive(false);
+				 e.setToken(RandomStringUtils.random(100, true, true));
+				 e.setPassword(SecurityConfig.crypter(e.getPassword()));
+				 e = etudiantRep.save(e);
+				 
+				 // send a mail to the user
+				 
+				 try {
+					String baseUrl = String.format("%s://%s:%d/",request.getScheme(),  request.getServerName(), request.getServerPort());
+					String url = baseUrl+"account/activate/"+e.getToken()+"/"+e.getId_user();
+					System.out.println(url);
+					mailService.sendMail(e, "Activation de votre compte", "Salam ; <br> pour activer votre compte <a href='"+url+"'>cliquez ici</a>");
+				} catch (Exception e2) {
+					// TODO: handle exception
+					e2.printStackTrace();
+					return ("/");
+				}
+				 
+			 }else {
+				 
+				 ArrayList<Filiere> filieres=(ArrayList<Filiere>) filiereRep.findAll();
+				 
+				 model.addAttribute("filieres",filieres);
+				 model.addAttribute("etudiant",new Etudiant());
+				 model.addAttribute("error",errors.toString());
+				
+				 return "EspacePublic/etudiant";
+				 
+			 }
+			 
+			 
 			 
 		} catch (Exception e2) {      
 			// TODO: handle exception

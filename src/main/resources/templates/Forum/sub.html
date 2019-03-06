@@ -1,0 +1,35 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/forum">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-12">
+
+	       <main role="main" >
+	       
+		    
+	        <div class="container col-md-10" style="margin-top: 100px">
+	        	     <hr/>
+			          <h3 class="center">vous avez pas le droit de poser une autre question </h3>
+			        <a href="#"  class="btn btn-outline-info" style="margin-right: 20px">votre profile</a>
+		            <a th:href="@{/}" class="btn btn-outline-dark" style="margin-right: 20px">pour utiliser un coupon </a>
+		            <a th:href="@{/com/forum}" class="btn btn-outline-dark">Forum </a>
+			         <hr/>
+	          
+	        </div>
+	        
+	       </main>
+	       
+          </div>
+          
+ </body>
+ </html>

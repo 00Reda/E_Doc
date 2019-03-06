@@ -29,7 +29,7 @@ public class QuestionRepense {
 	@Column(length=1000)
 	private String repense ;
 	private String dateAjout ;
-	private boolean valiser = false ; 
+	private boolean valider = false ; 
 	
 	@ManyToOne
 	@JoinColumn(name="id_question")

@@ -49,7 +49,8 @@
 		             		<big class="badge badge-pill badge-dark" th:text="${e.owner.roles[0].role}"></big><br/>
 		             		<span class="badge badge-pill badge-dark" th:text="${e.dateAjout}"></span>
 		                </p>
-		                 <a th:href="@{/com/forum/show?id=}+${e.id_question}" class="btn btn-outline-info">voir</a>
+		                 <a th:href="@{/com/forum/show?id=}+${e.id_question}" class="btn btn-outline-info">Voir</a>
+		                 <a th:href="@{${e.lien}}" class="btn btn-outline-dark">Documents</a>
 		                 
 					  
 					  </div>
@@ -69,7 +70,7 @@
 			    <div class="modal-content">
 			    
 			     <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">Ajout d'une question</h5>
+			        <h5 class="modal-title" id="exampleModalLabel">Question</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
@@ -82,7 +83,11 @@
 				        </div>  
 				        <div class="form-group">
 				        	<label for="inputEmail3" class="col-sm-2 col-form-label">Sujet</label>
-				            <input type="test" id="sujet" th:field="*{sujet}" class="form-control" placeholder="sujet" name="sujet" required="required">
+				            <input type="text" id="sujet" th:field="*{sujet}" class="form-control" placeholder="sujet" name="sujet" required="required">
+				        </div>
+				        <div class="form-group">
+				        	<label for="inputEmail3" class="col-sm-2 col-form-label">lien</label>
+				            <input type="text" id="lien" th:field="*{lien}" class="form-control" placeholder="lien de partage" name="sujet">
 				        </div>
 				        <div class="form-group">
 				        	<label for="inputEmail3" class="col-sm-2 col-form-label">descriptiuon</label>

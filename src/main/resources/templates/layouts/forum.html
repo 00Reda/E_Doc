@@ -6,6 +6,20 @@
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"> E-doc / \ Forum </a>
   <input class="form-control form-control-dark" type="text" placeholder="Search" aria-label="Search">
   
+  <ul class="navbar-nav px-3" th:if="${etudiant}">
+    <li class="nav-item text-nowrap" th:if="${etudiant.roles[0].role}=='ETUDIANT'" style="font-size: 18px">
+      <span class="badge badge-warning" data-toggle="tooltip" data-placement="bottom" title="le nombre total de vos points"> 
+      		<i class="fas fa-check-double"></i>
+      		<big th:text="${etudiant.nb_point}"></big>
+      </span> 
+      <span class="badge badge-warning" data-toggle="tooltip" data-placement="top" title="le nombre max des questions que vous pouvez poser"> 
+      	<i class="fas fa-marker"></i>
+      	 	<big th:text="${etudiant.nb_question}"></big>
+      </span>
+    </li>
+  </ul>
+  
+  
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
       <a class="nav-link" th:href="@{/dashboard}">dashboard</a>

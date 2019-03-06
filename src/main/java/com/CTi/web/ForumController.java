@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.CTi.EDocApplication;
+import com.CTi.entities.Etudiant;
 import com.CTi.entities.Question;
 import com.CTi.entities.QuestionRepense;
 import com.CTi.entities.Utilisateur;
+import com.CTi.repository.EtudiantRep;
 import com.CTi.repository.ForumQuestionRep;
 import com.CTi.repository.ForumRepenseRep;
 import com.CTi.repository.UtilisateurRep;
@@ -23,8 +25,13 @@ import com.CTi.repository.UtilisateurRep;
 @Controller
 public class ForumController {
 	
+	public static int NUMBER_POINTS_TO_ADD_AFTER_VALIDATION =10;
+	public static int MAX_NUMBER_POINTS_TO_CHANGE =100;
 	@Autowired
 	private UtilisateurRep userRep;
+	
+	@Autowired
+	private EtudiantRep etudiantRep;
 	
 	@Autowired
 	private ForumQuestionRep questionRep;
@@ -38,6 +45,7 @@ public class ForumController {
 		List<Question> list=questionRep.findAll();
 		model.addAttribute("questions",list);
 	    model.addAttribute("user",userRep.getOne(Long.parseLong(principal.getName())));
+	    model.addAttribute("etudiant",etudiantRep.getOne(Long.parseLong(principal.getName())));
 	    model.addAttribute("question",new Question());
 		return "Forum/home";
 	}
@@ -50,6 +58,7 @@ public class ForumController {
 		Question q=questionRep.getOne(Long.parseLong(id));
 		model.addAttribute("e",q);
 		model.addAttribute("user",userRep.getOne(Long.parseLong(principal.getName())));
+		model.addAttribute("etudiant",etudiantRep.getOne(Long.parseLong(principal.getName())));
 		Utilisateur u=userRep.getOne(Long.parseLong(principal.getName()));
 		System.err.println(u.getId_user());
 		model.addAttribute("repense",new QuestionRepense());
@@ -98,8 +107,23 @@ public class ForumController {
 	public String addQuestionAction(Model model,Principal principal,Question q) {
 		
 		q.setDateAjout(EDocApplication.userDataFormat.format(new Date()));
-		q.setOwner(userRep.getOne(Long.parseLong(principal.getName())));
-		questionRep.save(q);
+		Utilisateur user = userRep.getOne(Long.parseLong(principal.getName())) ;
+		q.setOwner(user);
+		Etudiant etudient = etudiantRep.getOne(Long.parseLong(principal.getName()));
+		if(etudient != null ) {
+			
+			if(etudient.getNb_question()!=0) {
+				etudient.setNb_question(etudient.getNb_question()-1);
+				etudiantRep.flush();
+				questionRep.save(q);
+			}else {
+				
+				return "redirect:/com/forum/sub";
+			}
+		}else {
+			
+			questionRep.save(q);
+		}
 		
 		return "redirect:/com/forum";
 	}
@@ -129,6 +153,28 @@ public class ForumController {
 		return "redirect:/com/forum/show?id="+rep.getQuestion().getId_question();
 	}
 	
+	@RequestMapping(value="/com/forum/reponse/valider", method=RequestMethod.GET)
+	public String ValidateResponse(Principal principal,@PathParam("id") String id) {
+		
+		if(id.equals("") || id.equals(0)) return "redirect:/com/forum";
+		Utilisateur user = userRep.getOne(Long.parseLong(principal.getName())) ;
+		QuestionRepense q= this.respenseRep.getOne(Long.parseLong(id));
+		if(q==null) return "redirect:/com/forum";
+		if(q.getQuestion().getOwner().getId_user()==user.getId_user() && q.getRependeur().getId_user()!=user.getId_user()) {
+			Etudiant etudiant=etudiantRep.getOne(q.getRependeur().getId_user());
+			q.setValider(true);
+			this.respenseRep.flush();
+			etudiant.setNb_point(etudiant.getNb_point()+NUMBER_POINTS_TO_ADD_AFTER_VALIDATION);
+			if(etudiant.getNb_point()==MAX_NUMBER_POINTS_TO_CHANGE) {
+				etudiant.setNb_point(0);
+				etudiant.setNb_question(etudiant.getNb_question()+1);
+			}
+			etudiantRep.flush();
+		}
+		
+		return "redirect:/com/forum/show?id="+q.getQuestion().getId_question();
+	}
+	
 	@RequestMapping(value="/com/forum/question/edit", method=RequestMethod.POST)
 	public String editQuestionAction(Model model,Principal pricipal,Question q,@PathParam("id") String id) {
 		
@@ -140,6 +186,23 @@ public class ForumController {
 		questionRep.saveAndFlush(ques);
 		
 		return "redirect:/com/forum/show?id="+ques.getId_question();
+	}
+	
+	@RequestMapping(value="/com/forum/sub", method=RequestMethod.GET)
+	public String subscriptionEnd(Model model,Principal principal) {
+		
+		
+		Etudiant etudient = etudiantRep.getOne(Long.parseLong(principal.getName()));
+		model.addAttribute("user",etudient);
+		System.err.println("ok ok ok ");
+		if(etudient != null ) {
+			if(etudient.getNb_question()==0) {
+                 return "Forum/sub";
+			}else {
+				return "redirect:/com/forum";
+			}
+		}
+			return "redirect:/com/forum";
 	}
 	
 	

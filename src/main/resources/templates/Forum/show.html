@@ -35,6 +35,7 @@
 		             		<span class="badge badge-pill badge-dark" th:text="${e.dateAjout}"></span>
 		                </p>
 		                <a href="#" th:data-id="${e.id_question}" class="btn btn-outline-info" id="reply">Repondre</a>
+		                <a th:href="@{${e.lien}}" class="btn btn-outline-dark">Documents</a>
 					  </div>
 				  </div>
 				  <div class="list-group col-md-11 offset-md-1">
@@ -44,10 +45,17 @@
 					      
 					      </h5>
 					      
-					      <div class="btn-group btn-group-sm" style="margin-bottom: 10px" role="group" aria-label="Basic example" th:if="${user.id_user}==${rep.rependeur.id_user} or ${user.roles[0].role}=='ADMIN' ">
-							  <a href="#" th:data-id="${rep.id_QR}" class="btn btn-outline-secondary edit-reply">modifer</a>
-							  <a th:href="@{/com/forum/reponse/delete?id=}+${rep.id_QR}" class="btn btn-outline-danger">supp</a>
+					      <div class="btn-group btn-group-sm" style="margin-bottom: 10px" role="group" aria-label="Basic example" >
+							  <a th:if="${user.id_user}==${rep.rependeur.id_user} or ${user.roles[0].role}=='ADMIN' " href="#" th:data-id="${rep.id_QR}" class="btn btn-outline-secondary edit-reply">modifer</a>
+							  <a th:if="${user.id_user}==${rep.rependeur.id_user} or ${user.roles[0].role}=='ADMIN' " th:href="@{/com/forum/reponse/delete?id=}+${rep.id_QR}" class="btn btn-outline-danger">supp</a>
+							  
+							  <span style="margin-left: 5px ; color: green ; margin-top:5px; margin-left:15px" th:if="${rep.valider}"><i class="fas fa-check-double"></i></span>
+							 
+							  <a th:if="! ${rep.valider} and ${user.id_user}!=${rep.rependeur.id_user} and ${user.id_user}==${rep.question.owner.id_user}" th:href="@{/com/forum/reponse/valider?id=}+${rep.id_QR}" style="margin-left: 5px"  class="btn btn-outline-dark"><i class="fas fa-check-square"></i></a>
+							  
 						   </div>
+						  
+						   
 					    </div>
 					    <p class="mb-1" th:text="${rep.repense}" th:id="${rep.id_QR}"></p>
 					    <p>
@@ -70,7 +78,7 @@
 			    <div class="modal-content">
 			    
 			     <div class="modal-header">
-			        <h3 class="modal-title" id="exampleModalLabel">Ajout une reponse</h3>
+			        <h3 class="modal-title" id="exampleModalLabel">Reponse</h3>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
@@ -83,8 +91,8 @@
 				        </div>  
 				        
 				        <div class="form-group">
-				        	<label for="inputEmail3" class="col-sm-2 col-form-label">reponse</label>
-				            <textarea class="form-control" th:field="*{repense}" id="reponse" rows="4" placeholder="repense" name="repense" required="required"></textarea>
+				        	
+				            <textarea class="form-control" th:field="*{repense}" id="Reponse" rows="4" placeholder="repense" name="repense" required="required"></textarea>
 				        </div>
 				        
 				        <hr/>

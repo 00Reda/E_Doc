@@ -6,7 +6,7 @@
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"> E-doc / \ Forum </a>
   <input class="form-control form-control-dark" type="text" placeholder="Search" aria-label="Search">
   
-  <ul class="navbar-nav px-3" th:if="${etudiant}">
+  <ul class="navbar-nav px-3" th:if="${etudiant } !=null">
     <li class="nav-item text-nowrap" th:if="${etudiant.roles[0].role}=='ETUDIANT'" style="font-size: 18px">
       <span class="badge badge-warning" data-toggle="tooltip" data-placement="bottom" title="le nombre total de vos points"> 
       		<i class="fas fa-check-double"></i>

@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,11 @@ public class ForumController {
 		List<Question> list=questionRep.findAll();
 		model.addAttribute("questions",list);
 	    model.addAttribute("user",userRep.getOne(Long.parseLong(principal.getName())));
-	    model.addAttribute("etudiant",etudiantRep.getOne(Long.parseLong(principal.getName())));
+	    Etudiant etudiant=null;
+	    if(etudiantRep.existsById(Long.parseLong(principal.getName()))) {
+	    	etudiant=etudiantRep.getOne(Long.parseLong(principal.getName()));
+	    }
+	    model.addAttribute("etudiant",etudiant);
 	    model.addAttribute("question",new Question());
 		return "Forum/home";
 	}
@@ -58,7 +63,13 @@ public class ForumController {
 		Question q=questionRep.getOne(Long.parseLong(id));
 		model.addAttribute("e",q);
 		model.addAttribute("user",userRep.getOne(Long.parseLong(principal.getName())));
-		model.addAttribute("etudiant",etudiantRep.getOne(Long.parseLong(principal.getName())));
+
+		Etudiant etudiant=null;
+	    if(etudiantRep.existsById(Long.parseLong(principal.getName()))) {
+	    	etudiant=etudiantRep.getOne(Long.parseLong(principal.getName()));
+	    }
+	    model.addAttribute("etudiant",etudiant);
+	    
 		Utilisateur u=userRep.getOne(Long.parseLong(principal.getName()));
 		System.err.println(u.getId_user());
 		model.addAttribute("repense",new QuestionRepense());
@@ -109,11 +120,11 @@ public class ForumController {
 		q.setDateAjout(EDocApplication.userDataFormat.format(new Date()));
 		Utilisateur user = userRep.getOne(Long.parseLong(principal.getName())) ;
 		q.setOwner(user);
-		Etudiant etudient = etudiantRep.getOne(Long.parseLong(principal.getName()));
-		if(etudient != null ) {
-			
-			if(etudient.getNb_question()!=0) {
-				etudient.setNb_question(etudient.getNb_question()-1);
+		Etudiant etudiant=null;
+	    if(etudiantRep.existsById(Long.parseLong(principal.getName()))) {
+	    	etudiant=etudiantRep.getOne(Long.parseLong(principal.getName()));
+	        if(etudiant.getNb_question()!=0) {
+				etudiant.setNb_question(etudiant.getNb_question()-1);
 				etudiantRep.flush();
 				questionRep.save(q);
 			}else {
@@ -161,7 +172,13 @@ public class ForumController {
 		QuestionRepense q= this.respenseRep.getOne(Long.parseLong(id));
 		if(q==null) return "redirect:/com/forum";
 		if(q.getQuestion().getOwner().getId_user()==user.getId_user() && q.getRependeur().getId_user()!=user.getId_user()) {
-			Etudiant etudiant=etudiantRep.getOne(q.getRependeur().getId_user());
+			
+			Etudiant etudiant=null;
+		    if(etudiantRep.existsById(Long.parseLong(principal.getName()))) {
+		    	etudiant=etudiantRep.getOne(Long.parseLong(principal.getName()));
+		    }
+			
+			if(etudiant==null) return "redirect:/com/forum";
 			q.setValider(true);
 			this.respenseRep.flush();
 			etudiant.setNb_point(etudiant.getNb_point()+NUMBER_POINTS_TO_ADD_AFTER_VALIDATION);
@@ -192,11 +209,12 @@ public class ForumController {
 	public String subscriptionEnd(Model model,Principal principal) {
 		
 		
-		Etudiant etudient = etudiantRep.getOne(Long.parseLong(principal.getName()));
-		model.addAttribute("user",etudient);
+		Etudiant etudiant = etudiantRep.getOne(Long.parseLong(principal.getName()));
+		
+		model.addAttribute("user",etudiant);
 		System.err.println("ok ok ok ");
-		if(etudient != null ) {
-			if(etudient.getNb_question()==0) {
+		if(etudiant != null ) {
+			if(etudiant.getNb_question()==0) {
                  return "Forum/sub";
 			}else {
 				return "redirect:/com/forum";

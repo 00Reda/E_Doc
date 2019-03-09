@@ -1,0 +1,56 @@
+
+
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  layout:decorator="layouts/admin">
+
+ 
+
+  <body>
+		  <div id="page" layout:fragment="content" class="col-md-10 offset-md-2">
+
+	       <main role="main" >
+	       
+		     <hr/>
+		     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	        <h1 class="h2">Liste des Coupons</h1>
+	        <div class="">
+	               <p>cliquer pour generer 10 coupons</p>
+	      	      <a class="btn btn-primary " th:href="@{/dashboard/admin/coupons/add}"><span data-feather="plus-circle"></span></a>
+	        </div>
+	      </div>
+	      
+	        <hr/>
+	        <table class="table">
+		        <thead> 
+		        	<tr>
+		        		<th>#</th>
+		        		<th>Coupons</th>
+		        		<th>Etat</th>
+		        		<th>Activer par</th>
+		        		<th>Supprimer</th>
+		        	</tr>
+		        </thead>
+		        <tbody>
+		        	   <tr th:each="c:${coupons}">
+		        	   		<td th:text="${c.id_coupon}"></td>
+		        	   		<td th:text="${c.coupon}"></td>
+		        	   		<td th:text="${c.etat}"></td>
+		        	   		<td >
+		        	   		 <p th:if="${c.proprietaire==null}" >personne</p>
+		        	   		 <p th:if="${c.proprietaire!=null}" th:text="${c.proprietaire}"></p>
+		        	   		</td>
+		        	   		<td>
+		        	   		 <a style="margin:5px" class="btn btn-danger" onclick=" return confirm('Vous allez supprimer ce coupon!!')" th:href="@{/dashboard/admin/delete/coupon(id=${c.id_coupon})}"><span data-feather="trash-2"></span></a>
+		        	   		</td>
+		        	   </tr>
+		        </tbody>
+	        </table>
+	       </main>
+          </div>
+          
+ </body>
+ </html>

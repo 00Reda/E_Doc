@@ -35,9 +35,6 @@
     <script th:src="@{/js/holder.min.js}"></script>
     <script th:src="@{/js/dashboard.js}"></script>   
     <script type="text/javascript">
-    
-			    
-    
               $(".delete").on("click",function(e){
             	  
             	  var r=window.confirm(" confirmation de la suppression ??!!");
@@ -79,6 +76,14 @@
         	
         });
      });
+              
+              var activecoupon=function(){
+            	  
+            	  document.getElementById('coupon').style.display="block"
+            		  document.getElementById('activercoupon').style.display="none"
+            	 // $('.coupon').css.display="block"
+            		  
+              }
   
     </script>
     

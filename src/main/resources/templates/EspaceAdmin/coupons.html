@@ -15,11 +15,12 @@
 	       <main role="main" >
 	       
 		     <hr/>
-		     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		     <div class=" border-bottom">
 	        <h1 class="h2">Liste des Coupons</h1>
 	        <div class="">
-	               <p>cliquer pour generer 10 coupons</p>
+	               <p>cliquer pour generer 10 coupons
 	      	      <a class="btn btn-primary " th:href="@{/dashboard/admin/coupons/add}"><span data-feather="plus-circle"></span></a>
+	       			</p>
 	        </div>
 	      </div>
 	      
@@ -41,7 +42,7 @@
 		        	   		<td th:text="${c.etat}"></td>
 		        	   		<td >
 		        	   		 <p th:if="${c.proprietaire==null}" >personne</p>
-		        	   		 <p th:if="${c.proprietaire!=null}" th:text="${c.proprietaire}"></p>
+		        	   		 <p th:if="${c.proprietaire!=null}" th:text="${c.proprietaire.nom} + ' / ' +${c.proprietaire.prenom}+ ' / ' +${c.proprietaire.email}"></p>
 		        	   		</td>
 		        	   		<td>
 		        	   		 <a style="margin:5px" class="btn btn-danger" onclick=" return confirm('Vous allez supprimer ce coupon!!')" th:href="@{/dashboard/admin/delete/coupon(id=${c.id_coupon})}"><span data-feather="trash-2"></span></a>

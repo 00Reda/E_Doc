@@ -183,8 +183,8 @@ public class EspaceEtudiantController {
 			  
 		  }else {
 			  Etudiant e=etudiantRep.getOne(Long.parseLong(auth.getName()));
-			  c.setEtat(true); 
-			  c.setProprietaire(e.getNom());
+			    c.setEtat(true); 
+			    c.setProprietaire(e);
 			    e.setNb_question(e.getNb_question()+15);
 			    icoupons.save(c);
 			    etudiantRep.save(e);

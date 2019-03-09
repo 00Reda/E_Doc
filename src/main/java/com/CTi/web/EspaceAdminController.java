@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.CTi.DocStatistics;
 import com.CTi.SecurityConfig;
+import com.CTi.entities.Coupon;
 import com.CTi.entities.Document;
 import com.CTi.entities.Etudiant;
 import com.CTi.entities.Filiere;
@@ -29,6 +32,7 @@ import com.CTi.entities.Roles;
 import com.CTi.entities.Utilisateur;
 import com.CTi.repository.DocumentRep;
 import com.CTi.repository.IEspacePublicRepository;
+import com.CTi.repository.Icoupons;
 import com.CTi.repository.ProfesseurRep;
 import com.CTi.repository.RoleRep;
 import com.CTi.repository.UtilisateurRep;
@@ -40,6 +44,8 @@ public class EspaceAdminController {
 	
     @Autowired
     private ProfesseurRep profRep;
+    @Autowired
+    private Icoupons icoupons;
     @Autowired
 	private IEspacePublicRepository espacePublicRep ;
     @Autowired
@@ -253,7 +259,30 @@ public class EspaceAdminController {
 		  model.addAttribute("list",profRep.listAdmin(new Roles("ADMIN")))	;
 		  return "EspaceAdmin/Admin/list";
 	  }
-	  
-	 
-
+	  //get all coupons
+	 @RequestMapping(value="/dashboard/admin/coupons/list")
+	 public String Allcoupons(Model model) {
+		 model.addAttribute("coupons", icoupons.findAll());
+		 return "EspaceAdmin/coupons";
+	 }
+	 //genereted coupon
+     @RequestMapping(value="/dashboard/admin/coupons/add")
+      public String GeneretedCoupons() {
+ 		for(int j=0; j<10; j++) {
+ 			String coupon=RandomStringUtils.random(15, true, true);
+ 			     if(icoupons.findByCoupon(coupon)==null) {
+ 			    	Coupon c= new Coupon();
+ 	 		 		c.setCoupon(coupon);
+ 	 		 		 icoupons.save(c);	
+ 			     }
+ 		 			 
+ 		}
+    	 return "redirect:/dashboard/admin/coupons/list";
+     }
+     
+     @RequestMapping(value="/dashboard/admin/delete/coupon")
+     public String deleteCoupon(@RequestParam(name="id") long id) {
+    	 icoupons.deleteById(id);
+    	 return "redirect:/dashboard/admin/coupons/list";
+     }
 }

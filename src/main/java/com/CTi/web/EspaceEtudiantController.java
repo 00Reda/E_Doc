@@ -15,11 +15,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.CTi.SecurityConfig;
+import com.CTi.entities.Coupon;
 import com.CTi.entities.Document;
 import com.CTi.entities.Etudiant;
 import com.CTi.entities.Filiere;
@@ -28,6 +30,7 @@ import com.CTi.entities.Utilisateur;
 import com.CTi.repository.EtudiantRep;
 import com.CTi.repository.FiliereRep;
 import com.CTi.repository.IEspacePublicRepository;
+import com.CTi.repository.Icoupons;
 import com.CTi.repository.UtilisateurRep;
 @Controller
 public class EspaceEtudiantController {
@@ -37,6 +40,8 @@ public class EspaceEtudiantController {
 	
 	@Autowired
 	 private EtudiantRep etudiantRep ;
+	@Autowired
+	private Icoupons icoupons;
 	
 	@Autowired
 	 private IEspacePublicRepository espacePublicRep ;
@@ -61,8 +66,15 @@ public class EspaceEtudiantController {
 	
 	
 	@RequestMapping(value="/dashboard/etudiant/info", method=RequestMethod.GET)
-	 public String infoetudiant(Model model,Authentication auth,boolean exits) {
-		 boolean errors=exits;
+	 public String infoetudiant(Model model,Authentication auth,String exits) {
+		String errors;
+		if(exits==null) {
+			 errors="rien";
+		 }else {
+			 errors=exits;
+		 }
+		
+		
 		 Etudiant e = etudiantRep.getOne(Long.parseLong(auth.getName()));
 		 model.addAttribute("etudiant",e);
 		
@@ -111,7 +123,7 @@ public class EspaceEtudiantController {
          
 	     if(!newpass.equals(confirmpass)|| !SecurityConfig.verifyPass(oldpass,e.getPassword())) {
 	    	 
-			  return this.infoetudiant(model, auth,true );
+			  return this.infoetudiant(model, auth,"pass");
 			  
 	     }else {
 	    	 e.setPassword(SecurityConfig.crypter(newpass));
@@ -159,7 +171,30 @@ public class EspaceEtudiantController {
 		 
 		 return "EspaceEtudiant/calendar";
 	 }	
-
+   //activer le coupon
+  @RequestMapping(value="/dashboard/etudiant/coupon/active")
+  public String activeCoupon(HttpServletRequest req,Authentication auth,Model model) {
+	  
+	  Coupon c=icoupons.findByCoupon(req.getParameter("coupon"));
+	  //System.out.println(c.toString());
+	 
+		  if(c==null||c.isEtat()) {
+			  return this.infoetudiant(model, auth, "coupon");
+			  
+		  }else {
+			  Etudiant e=etudiantRep.getOne(Long.parseLong(auth.getName()));
+			  c.setEtat(true); 
+			  c.setProprietaire(e.getNom());
+			    e.setNb_question(e.getNb_question()+15);
+			    icoupons.save(c);
+			    etudiantRep.save(e);
+		  }
+	  
+	    return this.infoetudiant(model, auth,"succes" );
+	    
+	 
+	  
+  }
    
    
 

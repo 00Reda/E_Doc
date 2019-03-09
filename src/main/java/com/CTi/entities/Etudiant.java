@@ -30,9 +30,9 @@ public class Etudiant extends Utilisateur implements Serializable{
 	private Filiere filiere;
 	
 		
-	private int nb_point ; 
+	private int nb_point=0 ; 
 	
-	private int nb_question ; 
+	private int nb_question=0 ; 
 	
 	
 	

@@ -43,6 +43,7 @@ public class Utilisateur implements Serializable{
 	protected String prenom;
 	protected Date date_creation;
 	protected String password;
+	
 	@Column(length=100)
 	protected String token ;
 

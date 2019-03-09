@@ -14,12 +14,32 @@
 	          <div class="col-4 " >
 	          <div class="card">
 	          <div class="card-body">
-	            <div class="alert alert-danger" role="alert" th:if="${errors}"> 
+	            <div class="alert alert-danger" role="alert" th:if="${errors=='pass'}"> 
                   <p>l'un des mot de pass correspond pas!!!</p>
                 </div>
+                <div class="alert alert-danger" role="alert" th:if="${errors=='coupon'}"> 
+                  <p>Votre coupon ne correspond pas ou est deja activer,Reessayer SVP!!!</p>
+                </div>
+                <div class="alert alert-success" role="alert" th:if="${errors=='succes'}"> 
+                  <p>Coupon activer avec succès!!!</p>
+                </div>
+               
+                <div class="form-group">
 	          <input type="button" class="btn btn-dark pass" value="modifier Mot de pass">
+	          </div>
 	            <form th:action="@{/dashboard/etudiant/pass/action}" class="forme" method="post">
     	        <div class="editpass">
+    	        </div>
+    	       </form>
+    	       <div class="form-group">
+    	        <input type="button" id="activercoupon" class="btn btn-primary" onclick="activecoupon()" value="Activer votre coupon">
+	            </div>
+	            <form th:action="@{/dashboard/etudiant/coupon/active}"  id="coupon" class="forme" method="post" style="display: none;">
+    	        <div class="form-group">
+    	         <input type="text" class="form-control" name="coupon" placeholder="donner votre coupon">
+    	        </div>
+    	        <div>
+    	        <input type="submit" class="btn btn-primary" value="activer">
     	        </div>
     	       </form>
 	          </div>

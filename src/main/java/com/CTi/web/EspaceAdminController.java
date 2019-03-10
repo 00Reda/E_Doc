@@ -272,7 +272,7 @@ public class EspaceAdminController {
  			String coupon=RandomStringUtils.random(15, true, true);
  			     if(icoupons.findByCoupon(coupon)==null) {
  			    	Coupon c= new Coupon();
- 	 		 		c.setCoupon(coupon);
+ 	 		 		c.setCoupon(coupon);;
  	 		 		 icoupons.save(c);	
  			     }
  		 			 
